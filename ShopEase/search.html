@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShopEase – Search</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ── Search Bar ── */
+    .search-bar-wrap .form-control { border-radius:50px 0 0 50px; border:2px solid var(--navy); padding:12px 22px; font-size:.95rem; }
+    .search-bar-wrap .form-control:focus { border-color:var(--gold); box-shadow:none; }
+    .search-bar-wrap .btn { border-radius:0 50px 50px 0; background:var(--navy); border:2px solid var(--navy); color:#fff; padding:12px 22px; transition:.2s; }
+    .search-bar-wrap .btn:hover { background:var(--gold); border-color:var(--gold); color:var(--navy); }
+
+    /* ── Results Table ── */
+    .search-table { background:#fff; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow2); }
+    .search-table table { margin:0; }
+    .search-table th { background:var(--navy); color:#fff; font-size:.78rem; text-transform:uppercase; letter-spacing:1px; padding:1rem; }
+    .search-table td { vertical-align:middle; padding:.9rem 1rem; border-color:var(--border); }
+    .search-table tr:hover { background:var(--cream); cursor:pointer; }
+    .search-table .prod-img { width:72px; height:72px; object-fit:cover; border-radius:10px; }
+
+    /* ── No Results ── */
+    .no-results { text-align:center; padding:4rem 0; display:none; }
+    .no-results i { font-size:3.5rem; color:#ddd; display:block; margin-bottom:1rem; }
+
+    /* ── Result Info ── */
+    .result-info { font-size:.83rem; color:var(--muted); margin-top:6px; display:block; }
+  </style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <h1><i class="fas fa-search mr-2" style="color:var(--gold);"></i>Search</h1>
+  <p>Find products by name, description or category</p>
+  <div class="breadcrumb-custom"><a href="index.html">Home</a><span class="sep">/</span>Search</div>
+</div>
+
+<!-- ── Search Section ── -->
+<section class="search_section py-5 my-3" id="search_section">
+  <div class="container">
+    <div class="title text-center mb-5">
+      <!-- Title handled by page hero above -->
+    </div>
+    <div class="row">
+      <!-- BEGIN RESULT -->
+      <div class="col-md-10 mx-auto">
+
+        <!-- BEGIN SEARCH INPUT -->
+        <div class="input-group search-bar-wrap mb-1">
+          <input type="text" id="searchInput" class="form-control" placeholder="e.g. shirt, shoes, electronics…"/>
+          <div class="input-group-append">
+            <button class="btn" type="button" onclick="runSearch()">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <!-- END SEARCH INPUT -->
+        <small class="result-info" id="resultInfo"></small>
+
+        <!-- BEGIN TABLE RESULT -->
+        <div class="search-table mt-3">
+          <table class="table table-hover mb-0" id="resultsTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Category</th>
+                <th class="text-center">Rating</th>
+                <th class="text-right">Price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody" class="border-bottom"></tbody>
+          </table>
+          <!-- No Results -->
+          <div class="no-results" id="no-results">
+            <i class="fas fa-search-minus"></i>
+            <h5>No products found</h5>
+            <p style="color:var(--muted);">Try a different keyword.</p>
+          </div>
+        </div>
+        <!-- END TABLE RESULT -->
+
+      </div>
+      <!-- END RESULT -->
+    </div>
+  </div>
+</section>
+<!-- ============== search section ends here ============== -->
+
+<div id="footer-placeholder"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  injectNavbar('search');
+  injectFooter();
+
+  // Pre-fill search from URL param
+  const q = new URLSearchParams(window.location.search).get('q');
+  if (q) document.getElementById('searchInput').value = q;
+
+  function runSearch() {
+    const query  = document.getElementById('searchInput').value.trim().toLowerCase();
+    const body   = document.getElementById('resultsBody');
+    const info   = document.getElementById('resultInfo');
+    const noRes  = document.getElementById('no-results');
+    const tbl    = document.getElementById('resultsTable');
+
+    const filtered = query
+      ? products.filter(p =>
+          p.name.toLowerCase().includes(query) ||
+          p.desc.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query))
+      : products;
+
+    body.innerHTML = '';
+
+    if (!filtered.length) {
+      tbl.style.display = 'none';
+      noRes.style.display = 'block';
+      info.textContent = query ? `No results for "${query}"` : '';
+      return;
+    }
+
+    tbl.style.display = '';
+    noRes.style.display = 'none';
+    info.textContent = query
+      ? `Showing ${filtered.length} result(s) matching "${query}"`
+      : `Showing all ${filtered.length} products`;
+
+    filtered.forEach((p, i) => {
+      body.innerHTML += `
+        <tr onclick="location.href='product-view.html?id=${p.id}'">
+          <td style="color:var(--muted);font-weight:700;">${i + 1}</td>
+          <td><img src="${p.img}" class="prod-img" alt="${p.name}"/></td>
+          <td>
+            <strong style="display:block;">${p.name}</strong>
+            <span style="font-size:.78rem;color:var(--muted);">${p.desc.substring(0, 60)}…</span>
+          </td>
+          <td><span class="chip">${p.category}</span></td>
+          <td class="text-center">${renderStars(p.rating)}</td>
+          <td class="text-right" style="font-weight:700;white-space:nowrap;">₹${p.price}</td>
+          <td>
+            <button class="btn-gold btn btn-sm"
+              onclick="event.stopPropagation();addToCart(${p.id});updateCartBadge(getCart())">
+              <i class="fas fa-cart-plus"></i>
+            </button>
+          </td>
+        </tr>`;
+    });
+  }
+
+  // Enter key support
+  document.getElementById('searchInput').addEventListener('keyup', function(e) {
+    if (e.key === 'Enter') runSearch();
+  });
+
+  // Run on load
+  runSearch();
+</script>
+</body>
+</html>

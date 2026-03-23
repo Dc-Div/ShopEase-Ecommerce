@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShopEase – About Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .about-hero { background:var(--navy); color:#fff; padding:5rem 0; position:relative; overflow:hidden; }
+    .about-hero::before { content:''; position:absolute; right:0; top:0; width:50%; height:100%; background:radial-gradient(ellipse at right, rgba(240,165,0,.12), transparent 70%); }
+    .stat-card { text-align:center; padding:2rem; background:#fff; border-radius:var(--radius); border:1px solid var(--border); box-shadow:var(--shadow2); }
+    .stat-card .num { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:900; color:var(--gold); }
+    .stat-card p { font-size:.85rem; color:var(--muted); margin:0; }
+    .team-card { background:#fff; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow2); text-align:center; padding:1.5rem; }
+    .team-card .avatar { width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,var(--gold),var(--navy)); display:flex; align-items:center; justify-content:center; font-size:2rem; color:#fff; margin:0 auto 1rem; font-family:'Playfair Display',serif; font-weight:900; }
+    .team-card h5 { font-weight:700; font-size:.95rem; margin-bottom:.2rem; }
+    .team-card p { font-size:.8rem; color:var(--muted); }
+  </style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<div class="about-hero">
+  <div class="container text-center">
+    <div class="chip">Our Story</div>
+    <h1 style="font-size:2.8rem;font-weight:900;margin:.5rem 0;">About ShopEase</h1>
+    <p style="color:#8899aa;max-width:600px;margin:0 auto;font-size:.95rem;line-height:1.8;">We started with a simple mission: make premium shopping accessible to everyone. From a small garage in Mumbai to serving over 50,000 happy customers — this is our story.</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <!-- Stats -->
+  <div class="row mb-5">
+    <div class="col-6 col-md-3 mb-3"><div class="stat-card"><div class="num">10K+</div><p>Products</p></div></div>
+    <div class="col-6 col-md-3 mb-3"><div class="stat-card"><div class="num">50K+</div><p>Customers</p></div></div>
+    <div class="col-6 col-md-3 mb-3"><div class="stat-card"><div class="num">4.9★</div><p>Avg. Rating</p></div></div>
+    <div class="col-6 col-md-3 mb-3"><div class="stat-card"><div class="num">5yrs</div><p>In Business</p></div></div>
+  </div>
+
+  <!-- Mission -->
+  <div class="row align-items-center mb-5">
+    <div class="col-md-6 mb-4 mb-md-0">
+      <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=520&q=80" style="width:100%;border-radius:var(--radius);box-shadow:var(--shadow);" alt="Mission"/>
+    </div>
+    <div class="col-md-6 pl-md-5">
+      <div class="chip">Our Mission</div>
+      <h2 style="font-weight:900;margin:.5rem 0 1rem;">Quality You Can Trust, Prices You'll Love</h2>
+      <p style="color:var(--muted);line-height:1.9;font-size:.92rem;">We believe great products shouldn't cost a fortune. That's why we partner directly with manufacturers to bring you authentic, high-quality goods at fair prices. Every item on ShopEase is hand-verified by our quality team before it reaches you.</p>
+      <ul style="color:var(--muted);font-size:.88rem;line-height:2.2;margin-top:1rem;padding-left:1.2rem;">
+        <li>100% authentic products guaranteed</li>
+        <li>Direct manufacturer partnerships</li>
+        <li>Transparent pricing — no hidden fees</li>
+        <li>Eco-friendly packaging initiative</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div class="section-header">
+    <h2>Meet Our Team</h2>
+    <div class="line"></div>
+  </div>
+  <div class="row">
+    <div class="col-6 col-md-3 mb-4"><div class="team-card"><div class="avatar">A</div><h5>Arjun Mehta</h5><p>CEO & Founder</p></div></div>
+    <div class="col-6 col-md-3 mb-4"><div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,#e91e63,#673ab7);">P</div><h5>Priya Shah</h5><p>Head of Design</p></div></div>
+    <div class="col-6 col-md-3 mb-4"><div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,#009688,#3f51b5);">R</div><h5>Rohan Verma</h5><p>Lead Engineer</p></div></div>
+    <div class="col-6 col-md-3 mb-4"><div class="team-card"><div class="avatar" style="background:linear-gradient(135deg,#ff5722,#ffc107);">S</div><h5>Sneha Iyer</h5><p>Customer Success</p></div></div>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/layout.js"></script>
+<script>injectNavbar('about'); injectFooter();</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShopEase – Product</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .product-view-img img { width:100%; border-radius:var(--radius); max-height:420px; object-fit:cover; }
+    .thumb-strip { display:flex; gap:.6rem; margin-top:.8rem; }
+    .thumb { width:64px; height:64px; border-radius:10px; object-fit:cover; cursor:pointer; border:2px solid transparent; transition:.2s; }
+    .thumb:hover, .thumb.active { border-color:var(--gold); }
+    .size-btn { border:2px solid var(--border); border-radius:8px; padding:5px 14px; font-weight:600; font-size:.85rem; cursor:pointer; transition:.2s; background:#fff; }
+    .size-btn.active, .size-btn:hover { border-color:var(--gold); background:var(--gold); color:var(--navy); }
+    .qty-box { display:flex; align-items:center; gap:.5rem; }
+    .qty-box button { width:34px; height:34px; border-radius:8px; border:1px solid var(--border); background:#fff; font-size:1rem; cursor:pointer; font-weight:700; transition:.2s; }
+    .qty-box button:hover { background:var(--gold); border-color:var(--gold); }
+    .qty-box input { width:48px; text-align:center; border:1px solid var(--border); border-radius:8px; height:34px; font-weight:700; }
+    .review-card { background:#fff; border-radius:12px; padding:1.2rem; border:1px solid var(--border); margin-bottom:1rem; }
+  </style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<div class="container py-5">
+  <div class="breadcrumb-custom justify-content-start mb-3" style="justify-content:flex-start!important;">
+    <a href="index.html">Home</a><span class="sep">/</span>
+    <a href="products.html">Products</a><span class="sep">/</span>
+    <span id="pv-breadcrumb">Product</span>
+  </div>
+  <div class="row">
+    <div class="col-lg-5 mb-4 mb-lg-0">
+      <div class="product-view-img">
+        <img id="pv-main-img" src="" alt=""/>
+      </div>
+      <div class="thumb-strip" id="pv-thumbs"></div>
+    </div>
+    <div class="col-lg-7 pl-lg-5">
+      <div class="chip" id="pv-cat"></div>
+      <h1 style="font-size:2rem;font-weight:900;margin:.3rem 0;" id="pv-name"></h1>
+      <div class="d-flex align-items-center mb-3" style="gap:.8rem;">
+        <div id="pv-stars"></div>
+        <span style="font-size:.83rem;color:var(--muted);" id="pv-reviews"></span>
+      </div>
+      <div class="d-flex align-items-baseline mb-3" style="gap:.6rem;">
+        <span style="font-size:2rem;font-weight:900;font-family:'Playfair Display',serif;" id="pv-price"></span>
+        <span style="font-size:1rem;color:var(--muted);text-decoration:line-through;" id="pv-old-price"></span>
+        <span style="font-size:.82rem;background:#e6f4ea;color:var(--green);font-weight:700;padding:2px 8px;border-radius:6px;" id="pv-discount"></span>
+      </div>
+      <p style="color:var(--muted);font-size:.92rem;line-height:1.8;" id="pv-desc"></p>
+      <hr/>
+      <div class="mb-3">
+        <div style="font-size:.82rem;font-weight:700;margin-bottom:.6rem;">SIZE</div>
+        <div class="d-flex flex-wrap" id="pv-sizes" style="gap:.4rem;"></div>
+      </div>
+      <div class="mb-3">
+        <div style="font-size:.82rem;font-weight:700;margin-bottom:.6rem;">QUANTITY</div>
+        <div class="qty-box">
+          <button onclick="changeQty(-1)">−</button>
+          <input type="number" id="pv-qty" value="1" min="1" max="10"/>
+          <button onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap mt-4" style="gap:.8rem;">
+        <button class="btn-gold btn flex-grow-1" onclick="addToCartFromView()"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+        <button class="btn-navy btn flex-grow-1" onclick="location.href='checkout.html'"><i class="fas fa-bolt mr-2"></i>Buy Now</button>
+      </div>
+      <div class="mt-4 d-flex" style="gap:1.5rem;font-size:.82rem;color:var(--muted);">
+        <span><i class="fas fa-shield-alt mr-1" style="color:var(--gold);"></i>Secure Payment</span>
+        <span><i class="fas fa-truck mr-1" style="color:var(--gold);"></i>Free Delivery</span>
+        <span><i class="fas fa-undo mr-1" style="color:var(--gold);"></i>30-Day Returns</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews -->
+  <div class="mt-5">
+    <h3 style="font-weight:900;">Customer Reviews</h3>
+    <hr/>
+    <div id="pv-review-list"></div>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  injectNavbar('');
+  injectFooter();
+
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id')) || 1;
+  const p = products.find(x => x.id === id) || products[0];
+
+  document.title = 'ShopEase – ' + p.name;
+  document.getElementById('pv-breadcrumb').textContent = p.name;
+  document.getElementById('pv-main-img').src = p.img;
+  document.getElementById('pv-cat').textContent = p.category;
+  document.getElementById('pv-name').textContent = p.name;
+  document.getElementById('pv-stars').innerHTML = renderStars(p.rating) + ` <span style="font-size:.82rem;color:var(--muted);">${p.rating}/5</span>`;
+  document.getElementById('pv-reviews').textContent = `(${p.reviews.length} reviews)`;
+  document.getElementById('pv-price').textContent = '₹' + p.price;
+  document.getElementById('pv-old-price').textContent = '₹' + p.oldPrice;
+  document.getElementById('pv-discount').textContent = Math.round((1 - p.price / p.oldPrice) * 100) + '% OFF';
+  document.getElementById('pv-desc').textContent = p.desc;
+
+  document.getElementById('pv-sizes').innerHTML = p.sizes.map((s,i) =>
+    `<button class="size-btn ${i===0?'active':''}" onclick="this.parentElement.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));this.classList.add('active')">${s}</button>`
+  ).join('');
+
+  document.getElementById('pv-thumbs').innerHTML = [p.img, p.img, p.img].map((img,i) =>
+    `<img src="${img}" class="thumb ${i===0?'active':''}"
+      onclick="document.getElementById('pv-main-img').src=this.src;document.querySelectorAll('.thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active')" alt=""/>`
+  ).join('');
+
+  document.getElementById('pv-review-list').innerHTML = p.reviews.map(r => `
+    <div class="review-card">
+      <div class="d-flex align-items-center mb-1" style="gap:.6rem;">
+        <div style="width:34px;height:34px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;">${r.user[0]}</div>
+        <strong style="font-size:.9rem;">${r.user}</strong>
+        ${renderStars(r.stars)}
+      </div>
+      <p style="font-size:.87rem;color:var(--muted);margin:0;">${r.text}</p>
+    </div>`).join('');
+
+  function changeQty(d) {
+    const inp = document.getElementById('pv-qty');
+    let v = parseInt(inp.value) + d;
+    if(v<1)v=1; if(v>10)v=10;
+    inp.value = v;
+  }
+  function addToCartFromView() {
+    const qty = parseInt(document.getElementById('pv-qty').value);
+    const size = document.querySelector('#pv-sizes .active')?.textContent || 'M';
+    addToCart(p.id, size, qty);
+    updateCartBadge(getCart());
+  }
+</script>
+</body>
+</html>

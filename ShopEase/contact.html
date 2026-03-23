@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ShopEase – Contact Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .info-item { display:flex; align-items:flex-start; gap:1rem; padding:1rem 0; border-bottom:1px solid var(--border); }
+    .info-item:last-child { border-bottom:none; }
+    .info-icon { width:44px; height:44px; border-radius:12px; background:rgba(240,165,0,.12); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .info-item h6 { font-weight:700; font-size:.88rem; margin-bottom:.2rem; }
+    .info-item p { font-size:.83rem; color:var(--muted); margin:0; }
+    .map-placeholder { background:linear-gradient(135deg,var(--navy),#1a3048); border-radius:var(--radius); height:260px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.2rem; text-align:center; }
+  </style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+
+<div class="page-hero">
+  <h1>Contact Us</h1>
+  <p>We'd love to hear from you</p>
+  <div class="breadcrumb-custom"><a href="index.html">Home</a><span class="sep">/</span>Contact Us</div>
+</div>
+
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-5 mb-4">
+      <div class="contact-card mb-4">
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h6>Our Address</h6><p>42, Commerce Street, Andheri West,<br/>Mumbai – 400053, Maharashtra</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-phone"></i></div>
+          <div><h6>Phone</h6><p>+91 98765 43210<br/>Mon–Sat, 9 AM – 6 PM</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-envelope"></i></div>
+          <div><h6>Email</h6><p>support@shopease.in<br/>hello@shopease.in</p></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon"><i class="fas fa-clock"></i></div>
+          <div><h6>Working Hours</h6><p>Monday – Saturday: 9 AM – 6 PM<br/>Sunday: Closed</p></div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        <div><i class="fas fa-map-marker-alt" style="color:var(--gold);display:block;font-size:2.5rem;margin-bottom:.5rem;"></i>Mumbai, Maharashtra</div>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="contact-card">
+        <h5 style="font-weight:900;margin-bottom:1.5rem;font-family:'Playfair Display',serif;">Send Us a Message</h5>
+        <div class="row">
+          <div class="col-md-6 mb-3"><label class="form-label">Your Name</label><input type="text" class="form-control" placeholder="Rahul Sharma"/></div>
+          <div class="col-md-6 mb-3"><label class="form-label">Email Address</label><input type="email" class="form-control" placeholder="rahul@example.com"/></div>
+          <div class="col-12 mb-3"><label class="form-label">Phone (Optional)</label><input type="tel" class="form-control" placeholder="+91 98765 43210"/></div>
+          <div class="col-12 mb-3">
+            <label class="form-label">Subject</label>
+            <select class="form-control">
+              <option>Order Enquiry</option>
+              <option>Return & Refund</option>
+              <option>Product Information</option>
+              <option>General Query</option>
+            </select>
+          </div>
+          <div class="col-12 mb-4"><label class="form-label">Message</label><textarea class="form-control" placeholder="Write your message here…"></textarea></div>
+          <div class="col-12">
+            <button class="btn-gold btn w-100" onclick="submitContact()"><i class="fas fa-paper-plane mr-2"></i>Send Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  injectNavbar('contact');
+  injectFooter();
+  function submitContact() {
+    toast('<i class="fas fa-envelope mr-1" style="color:var(--gold);"></i> Message sent! We\'ll reply soon.');
+  }
+</script>
+</body>
+</html>
